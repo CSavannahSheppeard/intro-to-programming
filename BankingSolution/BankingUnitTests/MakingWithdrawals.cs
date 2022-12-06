@@ -1,24 +1,22 @@
-﻿namespace BankingUnitTests
+﻿namespace Banking.UnitTests;
+
+public class MakingWithdrawals
 {
-    public class MakingWithdrawals
+
+    [Theory]
+    [InlineData(100)]
+    [InlineData(50)]
+    public void MakingWithdrawalsDecreasesBalance(decimal amountToWithdraw)
     {
-        [Theory]
-        [InlineData(100)]
-        [InlineData(50)]
-        public void MakingWithdrawalsDecreasesBalance(decimal amountToWithdrawal)
-        {
+        // Given
+        var account = new BankAccount();
+        var openingBalance = account.GetBalance();
 
-            //Given
-            var account = new BankAccount();
-            var openingBalance = account.GetBalance();
+        // When
+        account.Withdraw(amountToWithdraw);
 
-            //When
-
-            account.Deposit(amountToWithdrawal);
-
-            //Then
-            Assert.Equal(amountToWithdrawal - openingBalance, account.GetBalance());
-        }
+        // Then
+        Assert.Equal(openingBalance - amountToWithdraw,
+            account.GetBalance());
     }
 }
-

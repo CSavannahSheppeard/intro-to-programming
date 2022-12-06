@@ -1,20 +1,18 @@
-namespace BankingUnitTests;
 using Banking.Domain;
+
+namespace Banking.UnitTests;
+
 public class NewAccounts
 {
     [Fact]
     public void HaveTheCorrectOpeningBalance()
     {
-        //Write the code you wish you had (WTCYWYH)
-
+        // Write the Code You Wish You Had (WTCYWYH)
         // Given
         var account = new BankAccount();
-        var openingBalance = account.GetBalance();
-        var amountToDeposit = 100M;
         // When
-        account.Deposit(amountToDeposit);
+        decimal balance = account.GetBalance();
         // Then
         Assert.Equal(5000M, balance);
-
     }
 }

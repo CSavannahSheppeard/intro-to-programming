@@ -1,23 +1,24 @@
-﻿namespace BankingUnitTests
+﻿
+namespace Banking.UnitTests;
+
+public class MakingDeposits
 {
-    public class MakingDeposits
+    [Theory]
+    [InlineData(100)]
+    [InlineData(50)]
+    public void MakingDepositsIncreasesBalance(decimal amountToDeposit)
     {
-        [Theory]
-        [InlineData(100)]
-        [InlineData(50)]
-        public void MakingDepositsIncreasesBalance(decimal amountToDeposit)
-        {
+        // Given
+        var account = new BankAccount();
+        var openingBalance = account.GetBalance();
 
-            //Given
-            var account = new BankAccount();
-            var openingBalance = account.GetBalance();
+        // When
+        account.Deposit(amountToDeposit);
 
-            //When
+        // Then
+        Assert.Equal(amountToDeposit + openingBalance,
+            account.GetBalance());
 
-            account.Deposit(amountToDeposit);
 
-            //Then
-            Assert.Equal(amountToDeposit + openingBalance, account.GetBalance());
-        }
     }
 }
