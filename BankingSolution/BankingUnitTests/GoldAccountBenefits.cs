@@ -1,12 +1,21 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using Banking.UnitTests.TestDoubles;
 
-namespace BankingUnitTests
+namespace Banking.UnitTests;
+
+public class GoldAccountBenefits
 {
-    internal class GoldAccountBenefits
+    [Fact]
+    public void GetBonusOnDeposit()
     {
+        var account = new BankAccount(new DummyBonusCalculator());
+        var openingBalance = account.GetBalance();
+        var amountToDeposit = 100M;
+        var expectedBonus = 10M;
+
+        account.Deposit(amountToDeposit);
+
+        Assert.Equal(openingBalance + amountToDeposit + expectedBonus,
+            account.GetBalance());
+
     }
 }
