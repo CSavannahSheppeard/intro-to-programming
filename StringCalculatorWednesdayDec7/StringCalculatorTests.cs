@@ -1,55 +1,41 @@
-﻿
+﻿using Moq;
+
 namespace StringCalculator;
 
 public class StringCalculatorTests
 {
+    private readonly StringCalculator _calculator;
+    public StringCalculatorTests()
+    {
+        _calculator = new StringCalculator(new Mock<ILogger>().Object);
+    }
     [Fact]
-    public void EmptyStringReturnsZero(string numbers, int expected)
+    public void EmptyStringReturnsZero()
     {
-        var calculator = new StringCalculator();
 
-        var result = calculator.Add(numbers);
 
+        var result = _calculator.Add("");
+
+        Assert.Equal(0, result);
+    }
+
+    [Theory]
+    [InlineData("1", 1)]
+    [InlineData("2", 2)]
+    [InlineData("108", 108)]
+    public void SingleNumber(string numbers, int expected)
+    {
+
+        var result = _calculator.Add(numbers);
         Assert.Equal(expected, result);
     }
 
     [Theory]
-    [InlineData("1, 1", 2)]
-    [InlineData("1, 2", 3)]
-    [InlineData("8, 9", 17)]
-    [InlineData("12, 8", 20)]
-    [InlineData("100, 42", 142)]
-    public void TwoDigits(string numbers, int expected)
+    [InlineData("1,2", 3)]
+    [InlineData("2,2", 4)]
+    public void DoubleNumbers(string numbers, int expected)
     {
-        var calculator = new StringCalculator();
-
-        var result = calculator.Add(numbers);
-        
-        Assert.Equal(expected, result);
-    }
-
-    [Theory]
-    [InlineData("1,2,3", 6)]
-
-    public void ArbitraryNumbers(string numbers, int expected)
-    {
-        var calculator = new StringCalculator();
-
-        var result = calculator.Add(numbers);
-
-        Assert.Equal(expected, result);
-    }
-
-    [Theory]
-    [InlineData("1\n2\n3", 6)]
-    [InlineData("100\n200\n8", 308)]
-
-    public void MixedDelimeters(string numbers, int expected)
-    {
-        var calculator = new StringCalculator();
-
-        var result = calculator.Add(numbers);
-
+        var result = _calculator.Add(numbers);
         Assert.Equal(expected, result);
     }
 }
