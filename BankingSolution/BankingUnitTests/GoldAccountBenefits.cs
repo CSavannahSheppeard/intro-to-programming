@@ -13,7 +13,7 @@ public class GoldAccountBenefits
         var openingBalance = account.GetBalance();
         var amountToDeposit = 92.42M;
         var expectedBonus = 42M;
-        stubbedBonusCalculator.Setup(s => s.GetBonusForDepositOn(openingBalance, amountToDeposit)).Returns(expectedBonus));
+        stubbedBonusCalculator.Setup(s => s.GetBonusForDepositOn(openingBalance, amountToDeposit)).Returns(expectedBonus);
 
         // When
         account.Deposit(amountToDeposit);
